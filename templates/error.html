@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Access Denied</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h2>Unauthorized Access</h2>
+    <p>{{ message }}</p>
+    <a href="{{ url_for('sem_selection') }}">Go Back</a>
+</body>
+</html>

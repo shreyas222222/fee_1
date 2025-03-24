@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+    <h2>Search Results</h2>
+
+    <form method="GET" action="{{ url_for('search_students') }}" style="display: flex; align-items: center; gap: 10px;">
+        <input type="text" name="query" placeholder="Search by name, register no, receipt no, or date (e.g., 2025, March, 15-03-2025)" 
+            style="flex: 2; height: 40px; padding: 5px; font-size: 16px; border: 1px solid #ccc; border-radius: 0px;"
+            value="{{ request.args.get('query', '') }}">
+    
+        <select name="status" style="flex: 1; height: 40px; font-size: 16px; border: 1px solid #ccc; border-radius: 0px;">
+            <option value="all" {% if request.args.get('status', 'all') == 'all' %}selected{% endif %}>All</option>
+            <option value="paid" {% if request.args.get('status') == 'paid' %}selected{% endif %}>Paid</option>
+            <option value="pending" {% if request.args.get('status') == 'pending' %}selected{% endif %}>Pending</option>
+        </select>
+    
+        <button type="submit" style="flex: 1; height: 40px; font-size: 16px; border: 1px solid #ccc; border-radius: 0px;">
+            Search
+        </button>
+    </form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Register No</th>
+                <th>Student Name</th>
+                <th>Semester</th>
+                <th>Branch</th>
+                <th>Receipt No</th>
+                <th>Date</th>
+                <th>Total Fee</th>
+                <th>Fee Paid</th>
+                <th>Fee Pending</th>
+                <th>Remark</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in data %}
+            <tr>
+                <td>{{ student['Register No'] }}</td>
+                <td>{{ student['Student Name'] }}</td>
+                <td>{{ student['Semester'] }}</td>
+                <td>{{ student['Branch'] }}</td>
+                <td>{{ student['Receipt No'] }}</td>
+                <td>{{ student['Date'] }}</td>
+                <td>{{ student['Total Fee'] }}</td>
+                <td class="{% if student['Fee Paid']|int == 0 %}unpaid{% else %}paid{% endif %}">
+                    {{ student['Fee Paid'] }}
+                </td>
+                <td class="{% if student['Fee Pending']|int == 0 %}paid{% else %}pending{% endif %}">
+                    {{ student['Fee Pending'] }}
+                </td>
+                <td>{% if student['Fee Pending']|int == 0 %}✔️{% else %}❌{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('sem_selection') }}" class="logout-link">Back to Semesters</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let searchQuery = "{{ request.args.get('query', '') }}".toLowerCase();
+            if (searchQuery.length > 0) {
+                let rows = document.querySelectorAll("table tr");
+                rows.forEach(row => {
+                    let cells = row.querySelectorAll("td");
+                    cells.forEach(cell => {
+                        if (cell.innerText.toLowerCase().includes(searchQuery)) {
+                            cell.style.backgroundColor = "#ffff99"; // Highlight matching text
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

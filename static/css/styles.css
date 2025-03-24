@@ -1,0 +1,215 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body Styling */
+body {
+    background: url("../img/login1.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: #212529;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* Header Styling */
+h2 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    color: #ffffff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    animation: fadeInDown 1s ease;
+}
+
+/* Search Bar Styling */
+#searchBar {
+    width: 60%;
+    padding: 10px;
+    margin: 20px 0;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#searchBar:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+/* Button Styling */
+button, a {
+    display: inline-block;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover, a:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.9);
+    animation: fadeInUp 1s ease;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.paid {
+    background-color: green;
+    color: white; /* Ensures readability */
+    font-weight: bold;
+}
+
+.pending {
+    background-color: red;
+    color: white; /* Ensures readability */
+    font-weight: bold;
+}
+
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #e9ecef;
+    transition: background-color 0.3s ease;
+}
+
+/* Scrollbar Styling */
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #007BFF;
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+}
+
+/* Semester Selection Boxes */
+.sem-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    animation: fadeInUp 1s ease;
+}
+
+.sem-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    background: url("../img/box.jpg") no-repeat center center;
+    background-size: cover;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sem-box:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Logout Link */
+.logout-link {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.logout-link:hover {
+    color: #ddd;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    #searchBar {
+        width: 80%;
+    }
+
+    table th, table td {
+        font-size: 0.9rem;
+    }
+
+    .sem-box {
+        width: 120px;
+        height: 120px;
+        font-size: 16px;
+    }
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

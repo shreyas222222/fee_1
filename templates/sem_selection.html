@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Semester</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2 class="title">Select Semester</h2>
+        
+        <!-- Show Search Bar Only for Admin -->
+        {% if is_admin %}
+            <form action="{{ url_for('search_students') }}" method="GET" 
+                  style="display: flex; justify-content: center; width: 100%; margin-bottom: 20px;">
+                <input type="text" name="query" 
+                       placeholder="Search by Name, Register No, Receipt No, Branch, or Date (DD-MM-YYYY)" 
+                       required 
+                       style="width: 40%; height: 40px; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;">
+                <button type="submit" 
+                        style="height: 42px; padding: 0 15px; margin-left: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px;">
+                    Search
+                </button>
+            </form>
+        {% endif %}
+
+        <div class="sem-container">
+            {% for sem in semesters %}
+                <a href="{{ url_for('view_sem', sem=sem) }}" class="sem-box">{{ sem|capitalize }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

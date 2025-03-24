@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semester Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h2>Details for {{ sem }}</h2>
+    
+    <form method="GET" action="{{ url_for('view_sem', sem=sem) }}" style="display: flex; align-items: center; gap: 10px;">
+        <input type="text" name="query" placeholder="Search by name, register no, receipt no, or date (e.g., 2025, March, 15-03-2025)" 
+            style="flex: 2; height: 40px; padding: 5px; font-size: 16px; border: 1px solid #ccc; border-radius: 0px;"
+            value="{{ request.args.get('query', '') }}">
+    
+        <select name="status" style="flex: 1; height: 40px; font-size: 16px; border: 1px solid #ccc; border-radius: 0px;">
+            <option value="all" {% if selected_status == 'all' %}selected{% endif %}>All</option>
+            <option value="paid" {% if selected_status == 'paid' %}selected{% endif %}>Paid</option>
+            <option value="pending" {% if selected_status == 'pending' %}selected{% endif %}>Pending</option>
+        </select>
+    
+        <button type="submit" style="flex: 1; height: 40px; font-size: 16px; border: 1px solid #ccc; border-radius: 0px;">
+            Search
+        </button>
+    </form>
+    
+    <table>
+        <tr>
+            <th>Register No</th>
+            <th>Student Name</th>
+            <th>Semester</th>
+            <th>Branch</th>
+            <th>Receipt No</th>
+            <th>Date</th>
+            <th>Total Fee</th>
+            <th>Fee Paid</th>
+            <th>Fee Pending</th>
+            <th>Remark</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row['Register No'] }}</td>
+            <td>{{ row['Student Name'] }}</td>
+            <td>{{ row['Semester'] }}</td>
+            <td>{{ row['Branch'] }}</td>
+            <td>{{ row['Receipt No'] }}</td>
+            <td>{{ row['Date'] | replace(" 00:00:00", "") }}</td>
+            <td>{{ row['Total Fee'] }}</td>
+            <td class="{% if row['Fee Paid']|int == 0 %}unpaid{% else %}paid{% endif %}">
+                {{ row['Fee Paid'] }}
+            </td>
+            <td class="{% if row['Fee Pending']|int == 0 %}paid{% else %}pending{% endif %}" id="pending_{{ loop.index }}">
+                {{ row['Fee Pending'] }}
+            </td>
+            <td>{% if row['Fee Pending']|int == 0 %}✔️{% else %}❌{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ url_for('sem_selection') }}" class="logout-link">Back to Semesters</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let searchQuery = "{{ request.args.get('query', '') }}".toLowerCase();
+            if (searchQuery.length > 0) {
+                let rows = document.querySelectorAll("table tr");
+                rows.forEach(row => {
+                    let cells = row.querySelectorAll("td");
+                    cells.forEach(cell => {
+                        if (cell.innerText.toLowerCase().includes(searchQuery)) {
+                            cell.style.backgroundColor = "#ffff99";
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
